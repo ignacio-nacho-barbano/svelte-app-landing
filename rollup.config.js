@@ -3,7 +3,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
-import sveltePreprocess, {scss} from 'svelte-preprocess';
+import image from '@rollup/plugin-image';
+import sveltePreprocess, { scss } from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
 
@@ -39,6 +40,7 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		image(),
 		svelte({
 			preprocess: [scss(), sveltePreprocess({ sourceMap: !production })],
 			compilerOptions: {

@@ -1,11 +1,15 @@
 <script lang="ts">
-  export let name: string;
+  import logotype from "./assets/dymium-logotype.svg";
+  console.log(logotype);
 </script>
 
 <main>
   <h1>Dymium</h1>
+  <img src={logotype} alt="dymium logotype" />
+  <div class="filter" />
   <div class="dymium-animation-root">
     <div class="circles-container-top">
+      <div class="dymium-circle" />
       <div class="dymium-circle" />
       <div class="dymium-circle" />
       <div class="dymium-circle" />
@@ -20,10 +24,10 @@
       <div class="dymium-circle" />
       <div class="dymium-circle" />
       <div class="dymium-circle" />
+      <div class="dymium-circle" />
     </div>
   </div>
   <div class="overlay-content">
-    <h2>The future of data security is coming</h2>
     <a
       alt="Dymium contact mail"
       class="dymium-button-link"
@@ -33,6 +37,35 @@
 </main>
 
 <style lang="scss">
+  @keyframes fadeIn {
+    0% {
+      transform: scale(0.5);
+      opacity: 0;
+    }
+
+    60% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes energy {
+    $color: rgba(255, 255, 255, 0.5);
+
+    0% {
+      filter: drop-shadow(1 0 10px $color) drop-shadow(0 0 1px $color)
+        drop-shadow(0 1 2px $color);
+    }
+
+    100% {
+      filter: drop-shadow(0 0 25px $color) drop-shadow(0 0 5px $color)
+        drop-shadow(0 0 2px $color);
+    }
+  }
   main {
     display: flex;
     flex-direction: column;
@@ -45,15 +78,21 @@
     top: 0;
     overflow: hidden;
     left: 0;
-    background: linear-gradient(
-      260deg,
-      #18234b 0%,
-      #123d8b 20%,
-      #5d85cd 50%,
-      #e47253 50%,
-      #dd4920 80%,
-      #89250a 100%
-    );
+  }
+  .filter,
+  main {
+    background: linear-gradient(-5deg, #18719a 50%, #de5a13 50%);
+  }
+
+  .filter {
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    mix-blend-mode: hard-light;
+    opacity: 0.8;
   }
 
   .dymium-animation-root {
@@ -62,7 +101,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    transform: rotateZ(-10deg);
+    transform: rotateZ(-105deg);
 
     .circles-container-top,
     .circles-container-bottom {
@@ -77,81 +116,54 @@
     background: linear-gradient(180deg) bottom;
   }
 
-  @keyframes circlesSpin {
-    0% {
-      transform: rotateZ(0deg);
-    }
-    100% {
-      transform: rotateZ(360deg);
-    }
-  }
-
   @mixin circle-size($size) {
     height: $size + 0px;
     width: $size + 0px;
   }
 
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-    }
-
-    30% {
-      transform: scale(.9);
-    }
-
-    100% {
-      transform: scale(1.1);
-    }
-  }
-
-  @keyframes energy {
-    0% {
-      border-color: rgba(255, 255, 255, 0.623);
-    }
-
-    100% {
-      border-color: rgba(255, 255, 255, 0.267);
-    }
-  }
-
   .dymium-circle {
-    margin: -1px;
     position: absolute;
     border-radius: 50%;
     border-style: solid;
-    border-color: rgba(255, 255, 255, 0.623);
-    border-width: 1px;
-	animation-fill-mode: both;
-  	animation: pulse 3s infinite alternate, energy 1s infinite alternate;
-    &:nth-child(0) {
-      @include circle-size(100);
-	  animation-delay: 100ms;
-    }
-
+    border-color: white;
+    mix-blend-mode: overlay;
+    border-width: 3px;
+    animation-fill-mode: both;
+    animation: energy 1s 500ms alternate 2;
+    transform: skewX(-25deg) rotateZ(-15deg);
+    will-change: filter;
     &:nth-child(1) {
-      @include circle-size(200);
-	  animation-delay: 200ms;
+      @include circle-size(100);
+      margin: 5px 0;
     }
 
     &:nth-child(2) {
-      @include circle-size(300);
-	  animation-delay: 300ms;
+      margin: 4px 0;
+      @include circle-size(200);
     }
 
     &:nth-child(3) {
-      @include circle-size(500);
-	  animation-delay: 500ms;
+      margin: 3px 0;
+      @include circle-size(300);
     }
 
     &:nth-child(4) {
-      @include circle-size(800);
-	  animation-delay: 800ms;
+      margin: 2px 0;
+      @include circle-size(500);
     }
 
     &:nth-child(5) {
+      margin: 1px 0;
+      @include circle-size(800);
+    }
+
+    &:nth-child(6) {
       @include circle-size(1300);
-	  animation-delay: 1300ms;
+    }
+
+    &:nth-child(7) {
+      margin: -1px 0;
+      @include circle-size(4000);
     }
   }
 
@@ -164,11 +176,6 @@
     top: 50%;
   }
 
-  h1,
-  h2 {
-    text-shadow: 1px 1px 0 rgba(58, 58, 58, 0.671);
-  }
-
   .overlay-content {
     position: absolute;
     bottom: 0;
@@ -177,22 +184,26 @@
   }
 
   h1 {
-    font-family: "Roboto";
-    margin: auto;
-    text-transform: uppercase;
-    font-size: 5em;
-    font-weight: 300;
+    visibility: hidden;
   }
 
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 40px;
+  img {
+    position: absolute;
+    top: auto;
+    left: auto;
+    bottom: auto;
+    right: auto;
+    width: 32vmax;
+  }
+  img,
+  a.dymium-button-link {
+    will-change: opacity, transform;
+    animation: fadeIn 800ms 1.5s ease-in both;
   }
 
-  h1,
-  h2,
+  img,
   .overlay-content {
-    z-index: 1;
+    z-index: 3;
   }
 
   a:visited {
@@ -201,32 +212,37 @@
 
   a.dymium-button-link,
   button {
+    animation-delay: 2s;
     background: linear-gradient(
       rgba(0, 0, 0, 0.658),
       rgba(0, 0, 0, 0.507) 30%,
       rgba(0, 0, 0, 0.664)
     );
-    padding: 8px;
+    padding: 12px 20px;
     font-weight: bold;
     backdrop-filter: blur(8px);
     color: white;
+    font-size: 20px;
     border: 1px rgba(255, 255, 255, 0.747) solid;
     border-radius: 4px;
   }
 
   h1,
-  h2,
   a {
     z-index: 1;
   }
 
   @media only screen and (max-width: 400px) {
-    h1 {
-      font-size: 3rem;
+    .dymium-circle {
+      animation-delay: 1500ms;
     }
 
-    h2 {
-      font-size: 1rem;
+    img {
+      animation-delay: 500ms;
+    }
+
+    a.dymium-button-link {
+      animation-delay: 1000ms;
     }
 
     .overlay-content {
