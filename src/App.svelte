@@ -1,43 +1,29 @@
 <script lang="ts">
   import logotype from "./assets/dymium-logotype.svg";
-  import circles from "./assets/circles.svg";
   import { fade } from "svelte/transition";
 
   let circlesVisible = false;
-  let blurredCirclesVisible = false;
   setTimeout(() => {
     circlesVisible = true;
-    blurredCirclesVisible = true;
-  }, 400);
-
-  setTimeout(() => {
-    blurredCirclesVisible = false;
-  }, 1500);
+  }, 1000);
 </script>
 
 <main>
   <h1>Dymium</h1>
-  {#if circlesVisible}
+<video autoplay muted id="dymium-animated">
+  <source src="./assets/dymium-animated-video.webm" type="video/webm">
+  Your browser does not support HTML5 video.
+</video>
+
+  {#if false}
     <img
       class="logotype"
-      transition:fade={{ duration: 400, delay: 1000 }}
+      transition:fade={{ duration: 400, delay: 5400 }}
       src={logotype}
       alt="dymium logotype"
     />
   {/if}
-  <div class="filter" />
 
-  {#if circlesVisible}
-    <img class="dymium-circles" src={circles} alt="dymium logo circles" />
-  {/if}
-
-  {#if blurredCirclesVisible}
-    <img
-      class="dymium-circles with-blur"
-      src={circles}
-      alt="dymium logo circles"
-    />
-  {/if}
   <div class="overlay-content">
     {#if circlesVisible}
       <a
@@ -64,38 +50,16 @@
     overflow: hidden;
     left: 0;
   }
-  .filter,
-  main {
-    background: linear-gradient(-5deg, #18719a 49.9%, #de5a13 50.1%);
-  }
 
-  img.dymium-circles {
+  video {
     position: absolute;
-    object-fit: cover;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     width: 100vw;
     height: 100vh;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-
-    &.with-blur {
-      $color: rgba(255, 255, 255, 0.5);
-
-      filter: drop-shadow(0 0 16px $color) drop-shadow(0 0 4px $color)
-        drop-shadow(0 0 1px $color);
-    }
-  }
-
-  .filter {
-    z-index: 2;
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    mix-blend-mode: hard-light;
-    opacity: 0.8;
+    object-fit: cover;
   }
 
   .overlay-content {
@@ -115,7 +79,7 @@
     left: auto;
     bottom: auto;
     right: auto;
-    max-width: 40vmax;
+    max-width: 67vmax;
   }
 
   img.logotype,
@@ -149,10 +113,25 @@
     z-index: 1;
   }
 
-  @media only screen and (max-width: 400px) {
+  @media only screen and (max-width: 600px) {
+
+    main {
+      background: linear-gradient(174deg, #fca62b 49.5%, #00a2d5 50.5%);
+    }
+
+    video {
+      margin: auto;
+      height: 120vmin;
+    }
+
+
     a.dymium-button-link {
       font-size: 16px;
       line-height: 16px;
+    }
+
+    .overlay-content {
+      margin-bottom: 30vh;
     }
   }
 </style>
